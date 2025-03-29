@@ -342,7 +342,6 @@ $RECYCLE.BIN/
 *.lnk
 #jibjigzag
 .vscode/
-.idea
 .idea/
 
 # End of https://www.toptal.com/developers/gitignore/api/maven,intellij,intellij+all,intellij+iml,macos,windows,linux,visualstudiocode
