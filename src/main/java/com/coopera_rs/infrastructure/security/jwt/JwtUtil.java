@@ -1,22 +1,30 @@
 package com.coopera_rs.infrastructure.security.jwt;
 
+import java.util.Base64;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 
+import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
-import java.util.Date;
+
 @Component
 public class JwtUtil {
     
-    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+//    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256); GERA ALEATORIAMENTE
+    private final Key key;
     private final long expirationTime = 86400000;
 
-    public String generateToken(String username){
+    public JwtUtil ( @Value("${spring.security.oauth2.resourceserver.jwt.secret}") String secret ) {
+        byte[] decodedKey = Base64.getDecoder().decode(secret);
+        this.key = new SecretKeySpec(decodedKey, SignatureAlgorithm.HS256.getJcaName());
+    }
+
+    public String generateToken( String username){
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
