@@ -1,1 +1,11 @@
-C:\Users\tomas\Downloads\coopera-rs\src\main\java\com\coopera_rs\Application.java
+/Users/perabook/programing/CooperaRS/back-end/src/main/java/com/coopera_rs/infrastructure/security/SecurityConfig.java
+/Users/perabook/programing/CooperaRS/back-end/src/main/java/com/coopera_rs/Application.java
+/Users/perabook/programing/CooperaRS/back-end/src/main/java/com/coopera_rs/infrastructure/repository/SpringDataUserRepository.java
+/Users/perabook/programing/CooperaRS/back-end/src/main/java/com/coopera_rs/infrastructure/repository/entity/UserEntity.java
+/Users/perabook/programing/CooperaRS/back-end/src/main/java/com/coopera_rs/core/validation/PasswordValidatorImpl.java
+/Users/perabook/programing/CooperaRS/back-end/src/main/java/com/coopera_rs/infrastructure/repository/mapper/UserMapper.java
+/Users/perabook/programing/CooperaRS/back-end/src/main/java/com/coopera_rs/core/User.java
+/Users/perabook/programing/CooperaRS/back-end/src/main/java/com/coopera_rs/core/validation/PasswordValidator.java
+/Users/perabook/programing/CooperaRS/back-end/src/main/java/com/coopera_rs/application/service/UserService.java
+/Users/perabook/programing/CooperaRS/back-end/src/main/java/com/coopera_rs/infrastructure/security/PasswordEncoderConfig.java
+/Users/perabook/programing/CooperaRS/back-end/src/main/java/com/coopera_rs/core/port/UserRepository.java
