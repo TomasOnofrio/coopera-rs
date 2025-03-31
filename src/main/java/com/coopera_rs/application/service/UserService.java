@@ -20,9 +20,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, PasswordEncoderConfig passwordEncoderConfig) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoderConfig.passwordEncoder();
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User registerUser(@Valid User user){
