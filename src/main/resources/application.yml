@@ -3,8 +3,18 @@ spring:
     url: jdbc:h2:mem:testdb
     driverClassName: org.h2.Driver
     username: sa
-    password: 
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+
+  server:
+    port: 8080
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          secret: Y2hhdmUtY2VtLXBvci1jZW50by1zZWd1cmE=
