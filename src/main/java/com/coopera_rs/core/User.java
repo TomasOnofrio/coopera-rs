@@ -6,9 +6,9 @@ import java.util.UUID;
 public class User {
     
     private UUID id;
-    private String email;
     private String username;
     private String password;
+    private String email;
     private boolean emailVerified;
 
 
@@ -16,11 +16,11 @@ public class User {
     }
 
 
-    public User(UUID id, String email, String username, String password, boolean emailVerified) {
+    public User(UUID id, String username, String password, String email, boolean emailVerified) {
         this.id = id != null ? id : UUID.randomUUID();
-        this.email = email;
         this.username = username;
         this.password = password;
+        this.email = email;
         this.emailVerified = false;
     }
 

@@ -10,9 +10,9 @@ public class UserMapper {
     public static UserEntity toEntity(User user) {
         UserEntity entity = new UserEntity();
         entity.setId(user.getId());
-        entity.setEmail(user.getEmail());
         entity.setUsername(user.getUsername());
         entity.setPassword(user.getPassword());
+        entity.setEmail(user.getEmail());
         entity.setEmailVerified(user.getEmailVerified());
         return entity;
     }
@@ -21,8 +21,8 @@ public class UserMapper {
         return new User(
             entity.getId(),
             entity.getUsername(),
-            entity.getEmail(),
             entity.getPassword(),
+            entity.getEmail(),
             entity.getEmailVerified()
         );
     }
@@ -31,9 +31,9 @@ public class UserMapper {
         return new User(
             null, 
             dto.getUsername(),
-            dto.getEmail(),
             dto.getPassword(),
-            false 
+            dto.getEmail(),
+            false
         );
     }
 
