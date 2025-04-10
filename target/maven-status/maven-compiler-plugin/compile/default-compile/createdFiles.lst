@@ -1,8 +1,10 @@
 com\coopera_rs\application\service\UserService.class
 com\coopera_rs\web\dto\UserResponseDTO.class
+com\coopera_rs\web\dto\LoginResponseDTO.class
 com\coopera_rs\core\User.class
 com\coopera_rs\core\port\UserRepository.class
 com\coopera_rs\infrastructure\security\SecurityConfig.class
+com\coopera_rs\web\dto\LoginRequestDTO.class
 com\coopera_rs\infrastructure\repository\adapter\JpaUserRepositoryAdapter.class
 com\coopera_rs\Application.class
 com\coopera_rs\infrastructure\security\jwt\JwtUtil.class
