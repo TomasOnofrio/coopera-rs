@@ -16,14 +16,14 @@ public class UserEntity {
     @UuidGenerator
     private UUID id;
 
-    @Column(unique = true, nullable = false)
-    private String email;
-    
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, name = "username")
     private String username;
 
     @Column
     private String password;
+
+    @Column(unique = true, nullable = false, name = "email")
+    private String email;
 
     @Column
     private boolean emailVerified;
@@ -32,11 +32,11 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(UUID id, String email, String username, String password, boolean emailVerified) {
+    public UserEntity(UUID id,String username, String password, String email,  boolean emailVerified) {
         this.id = id;
-        this.email = email;
         this.username = username;
         this.password = password;
+        this.email = email;
         this.emailVerified = emailVerified;
     }
 

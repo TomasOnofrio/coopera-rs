@@ -24,12 +24,12 @@ public class JwtUtil {
         this.key = new SecretKeySpec(decodedKey, SignatureAlgorithm.HS256.getJcaName());
     }
 
-    public String generateToken( String username){
+    public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date((System.currentTimeMillis() + expirationTime)))
-                .signWith(key)
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 horas
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 

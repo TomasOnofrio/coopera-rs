@@ -4,6 +4,7 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password:
+
   h2:
     console:
       enabled: true
@@ -17,4 +18,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          secret: Y2hhdmUtY2VtLXBvci1jZW50by1zZWd1cmE=
+          secret: eW91ci12ZXJ5LXN0cm9uZy1zZWNyZXQta2V5LXdpdGgtMzItY2hhcmFjdGVycw==
+  jpa:
+    hibernate:
+      ddl-auto: create
