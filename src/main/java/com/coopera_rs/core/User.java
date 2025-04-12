@@ -24,8 +24,6 @@ public class User {
         this.emailVerified = false;
     }
 
-
-
     public UUID getId() {
         return this.id;
     }

@@ -11,7 +11,7 @@ import com.coopera_rs.web.dto.LoginRequestDTO;
 import com.coopera_rs.web.dto.LoginResponseDTO;
 import com.coopera_rs.web.dto.RegisterUserDTO;
 import com.coopera_rs.web.dto.UserResponseDTO;
-import com.coopera_rs.web.dto.ErrorResponseDTO;
+import com.coopera_rs.web.dto.LoginResponseDTO.ErrorResponseDTO;
 
 import jakarta.validation.Valid;
 
@@ -25,9 +25,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-
-
 
 @RestController
 @RequestMapping("/api/auth")
@@ -43,7 +40,6 @@ public class AuthController {
         this.jwtUtil = jwtUtil;
         this.passwordEncoder = passwordEncoder;
     }
-
 
     @PostMapping("/register")
     public ResponseEntity<UserResponseDTO> register(@RequestBody @Valid RegisterUserDTO registerUserDTO) {
