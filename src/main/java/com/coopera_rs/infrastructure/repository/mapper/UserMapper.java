@@ -17,7 +17,7 @@ public class UserMapper {
         return entity;
     }
 
-    public static User toDomain(UserEntity entity) {
+    public static User toDomainDTO(UserEntity entity) {
         return new User(
             entity.getId(),
             entity.getUsername(),
@@ -27,7 +27,7 @@ public class UserMapper {
         );
     }
 
-    public static User toDomain(RegisterUserDTO dto) {
+    public static User toDomainDTO(RegisterUserDTO dto) {
         return new User(
             null, 
             dto.getUsername(),
@@ -38,6 +38,15 @@ public class UserMapper {
     }
 
     public static UserResponseDTO toResponseDTO(User user) {
+        return new UserResponseDTO(
+            user.getId(),
+            user.getUsername(),
+            user.getEmail(),
+            user.getEmailVerified()
+        );
+    }
+
+    public static UserResponseDTO entityToResponseDTO(UserEntity user) {
         return new UserResponseDTO(
             user.getId(),
             user.getUsername(),

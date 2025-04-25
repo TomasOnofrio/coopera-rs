@@ -5,6 +5,7 @@ import java.util.*;
 
 import com.coopera_rs.infrastructure.repository.ConfirmationTokenRepository;
 import com.coopera_rs.infrastructure.repository.entity.ConfirmationToken;
+import com.coopera_rs.infrastructure.repository.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -37,7 +38,7 @@ public class UserService {
 
 
 
-    public User registerUser(@Valid User user){
+    public User registerUser(@Valid User user, String link){
         Optional<User> existingUser = userRepository.findByEmail(user.getEmail());
         if (existingUser.isPresent()) {
             throw new IllegalArgumentException("Email atualmente em uso");
@@ -55,7 +56,17 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         users.put(user.getId(), user);
-        return userRepository.save(user);
+
+        user = userRepository.save(user);
+
+        String token = UUID.randomUUID().toString();
+        link += token;
+        ConfirmationToken confirmationToken = new ConfirmationToken(user.getId(),token, LocalDateTime.now().plusMinutes(15));
+        confirmationTokenRepository.save(confirmationToken);
+
+        emailService.confirmaEmail(user.getEmail(),link);
+
+        return user;
     }
 
     public boolean verifyLoginUser ( @Valid LoginRequestDTO user) {
@@ -69,7 +80,7 @@ public class UserService {
     }
 
 
-    public List<User> listAllUsers(){
+    public List<UserEntity> listAllUsers(){
         return userRepository.findAll();
     }
 }

@@ -19,6 +19,9 @@ public class RegisterUserDTO {
     @Email(message = "O e-mail deve ser válido.")
     private String email;
 
+    @NotBlank()
+    private String link;
+
     public String getUsername() {
         return username;
     }
@@ -41,5 +44,13 @@ public class RegisterUserDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(@NotBlank() String link) {
+        this.link = link;
     }
 }

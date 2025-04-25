@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import com.coopera_rs.core.User;
+import com.coopera_rs.infrastructure.repository.entity.UserEntity;
 
 public interface UserRepository {
     
@@ -12,6 +13,7 @@ public interface UserRepository {
     Optional<User> findByEmail(String email);
     Optional<User> findByUsername(String username);
     User findById(UUID id);
-    List<User> findAll();
-    boolean updateEmailVerifiedStatus(UUID userId, boolean verified);
+    List<UserEntity> findAll();
+    void updateEmailStatus(UUID userId, boolean verified);
+    User updateUser ( UserEntity user );
 }

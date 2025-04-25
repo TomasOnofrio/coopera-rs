@@ -14,9 +14,8 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String remetente;
 
-    public void confirmaEmail(String destinatario,String token){
+    public void confirmaEmail(String destinatario,String link){
         try{
-            String link = "http://localhost:8080/api/auth/confirm?token=" + token;
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(remetente);
             message.setTo(destinatario);

@@ -3,6 +3,7 @@ package com.coopera_rs.web.controllers;
 import com.coopera_rs.core.port.UserRepository;
 import com.coopera_rs.infrastructure.repository.ConfirmationTokenRepository;
 import com.coopera_rs.infrastructure.repository.entity.ConfirmationToken;
+import com.coopera_rs.infrastructure.repository.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,8 +55,9 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<UserResponseDTO> register(@RequestBody @Valid RegisterUserDTO registerUserDTO) {
-        User user = UserMapper.toDomain(registerUserDTO);
-        User registeredUser = userService.registerUser(user);
+        User user = UserMapper.toDomainDTO(registerUserDTO);
+        String link = registerUserDTO.getLink();
+        User registeredUser = userService.registerUser(user,link);
 
         UserResponseDTO responseDTO = UserMapper.toResponseDTO(registeredUser);
         System.out.println("Senha codificada: " + user.getPassword());
@@ -94,10 +96,12 @@ public class AuthController {
 
     @GetMapping("/listar")
     public ResponseEntity<List<UserResponseDTO>> listarUsers() {
-        List<User> users = userService.listAllUsers();
+        List<UserEntity> users = userService.listAllUsers();
+
+        System.out.println(users.get(0).getEmailVerified());
 
         List<UserResponseDTO> responseDTOs = users.stream()
-            .map(UserMapper::toResponseDTO)
+            .map(UserMapper::entityToResponseDTO)
             .toList();
 
         return ResponseEntity.ok(responseDTOs);
@@ -123,7 +127,7 @@ public class AuthController {
 
         UUID userId = confirmationToken.getUserId();
 
-        userRepository.updateEmailVerifiedStatus(userId, true);
+        userRepository.updateEmailStatus(userId, true);
 
         confirmationToken.setConfirmed(true);
         confirmationTokenRepository.save(confirmationToken);
