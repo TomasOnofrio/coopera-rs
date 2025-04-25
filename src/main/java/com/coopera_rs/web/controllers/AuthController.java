@@ -1,5 +1,9 @@
 package com.coopera_rs.web.controllers;
 
+import com.coopera_rs.core.port.UserRepository;
+import com.coopera_rs.infrastructure.repository.ConfirmationTokenRepository;
+import com.coopera_rs.infrastructure.repository.entity.ConfirmationToken;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,8 +19,10 @@ import com.coopera_rs.web.dto.LoginResponseDTO.ErrorResponseDTO;
 
 import jakarta.validation.Valid;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,8 +40,13 @@ public class AuthController {
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private ConfirmationTokenRepository confirmationTokenRepository;
 
-    public AuthController(UserService userService, JwtUtil jwtUtil, PasswordEncoder passwordEncoder) {
+    @Autowired
+    private UserRepository userRepository;
+
+    public AuthController(UserService userService, JwtUtil jwtUtil, PasswordEncoder passwordEncoder, ConfirmationTokenRepository tokenRepository) {
         this.userService = userService;
         this.jwtUtil = jwtUtil;
         this.passwordEncoder = passwordEncoder;
@@ -90,5 +101,33 @@ public class AuthController {
             .toList();
 
         return ResponseEntity.ok(responseDTOs);
-    }   
+    }
+
+    @GetMapping("/confirm")
+    public ResponseEntity<String> confirmEmail(@RequestParam("token") String token) {
+        Optional<ConfirmationToken> optionalToken = confirmationTokenRepository.findByToken(token);
+        System.out.println(token);
+        if(optionalToken.isEmpty()) {
+            return ResponseEntity.badRequest().body("Token inválido!");
+        }
+
+        ConfirmationToken confirmationToken = optionalToken.get();
+
+        if(confirmationToken.getExpiresAt().isBefore(LocalDateTime.now())) {
+            return ResponseEntity.badRequest().body("Token expirado!");
+        }
+
+        if(confirmationToken.isConfirmed()){
+            return ResponseEntity.badRequest().body("Email já confirmado!");
+        }
+
+        UUID userId = confirmationToken.getUserId();
+
+        userRepository.updateEmailVerifiedStatus(userId, true);
+
+        confirmationToken.setConfirmed(true);
+        confirmationTokenRepository.save(confirmationToken);
+
+        return ResponseEntity.ok("Email confirmado!");
+    }
 }

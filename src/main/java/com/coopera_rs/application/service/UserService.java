@@ -1,7 +1,11 @@
 package com.coopera_rs.application.service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
+import com.coopera_rs.infrastructure.repository.ConfirmationTokenRepository;
+import com.coopera_rs.infrastructure.repository.entity.ConfirmationToken;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import jakarta.validation.Valid;
@@ -18,6 +22,12 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder; 
     private Map<UUID, User> users = new HashMap<>();
+
+    @Autowired
+    private ConfirmationTokenRepository confirmationTokenRepository;
+
+    @Autowired
+    private EmailService emailService;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -42,7 +52,6 @@ public class UserService {
          * var salt = "sdkjfdifji"
          * String cripto = passwordEncoder.encode(user.getPassword()) append 
          */
-
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         users.put(user.getId(), user);
