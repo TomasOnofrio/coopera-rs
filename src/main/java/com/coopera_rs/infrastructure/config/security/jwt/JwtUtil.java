@@ -1,4 +1,4 @@
-package com.coopera_rs.infrastructure.security.jwt;
+package com.coopera_rs.infrastructure.config.security.jwt;
 
 import java.util.Base64;
 import java.util.Date;
