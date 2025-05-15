@@ -6,9 +6,11 @@ import com.coopera_rs.application.exceptions.InvalidPassword;
 import com.coopera_rs.web.dto.ErrorResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestControllerAdvice
@@ -51,5 +53,19 @@ public class GlobalExceptionHandler {
                 .build();
 
         return new ResponseEntity<>(error, HttpStatus.I_AM_A_TEAPOT);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ErrorResponseDTO> handleAuthenticationException(AuthenticationException ex) {
+        // Criando a resposta de erro com a sua classe DTO
+        ErrorResponseDTO errorResponse = ErrorResponseDTO.builder()
+                .statusMessage("Unauthorized")
+                .success(false)
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
+                .error(Collections.singletonList("Token de autenticação inválido ou ausente."))
+                .build();
+
+        // Retornando o erro com o status 401
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 }
