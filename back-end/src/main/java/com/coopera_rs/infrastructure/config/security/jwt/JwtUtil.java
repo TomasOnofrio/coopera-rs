@@ -14,8 +14,8 @@ import java.security.Key;
 
 @Component
 public class JwtUtil {
-    
-//    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256); GERA ALEATORIAMENTE
+
+    //    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256); GERA ALEATORIAMENTE
     private final Key key;
     private final long expirationTime = 86400000;
 
@@ -33,8 +33,8 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String validateToken(String token){
-        return Jwts.parserBuilder()
+    public void validateToken(String token){
+        Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
@@ -42,4 +42,16 @@ public class JwtUtil {
                 .getSubject();
     }
 
+    public boolean isTokenValid(String authorizationHeader) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String token = authorizationHeader.substring(7);
+            try {
+                validateToken(token);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+        return false;
+    }
 }
