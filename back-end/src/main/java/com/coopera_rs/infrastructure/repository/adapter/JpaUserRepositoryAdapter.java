@@ -1,6 +1,6 @@
 package com.coopera_rs.infrastructure.repository.adapter;
 
-import com.coopera_rs.core.User;
+import com.coopera_rs.core.domain.User;
 import com.coopera_rs.core.port.UserRepository;
 import com.coopera_rs.infrastructure.repository.SpringDataUserRepository;
 import com.coopera_rs.infrastructure.repository.entity.UserEntity;
@@ -29,12 +29,6 @@ public class JpaUserRepositoryAdapter implements UserRepository {
     @Override
     public Optional<User> findByEmail ( String email ) {
         return springDataUserRepository.findByEmail(email)
-                .map(UserMapper::toDomain);
-    }
-
-    @Override
-    public Optional<User> findByUsername ( String username ) {
-        return springDataUserRepository.findByUsername(username)
                 .map(UserMapper::toDomain);
     }
 
