@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+
+  server:
+    port: 8080
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          secret: eW91ci12ZXJ5LXN0cm9uZy1zZWNyZXQta2V5LXdpdGgtMzItY2hhcmFjdGVycw==
+  jpa:
+    hibernate:
+      ddl-auto: create
