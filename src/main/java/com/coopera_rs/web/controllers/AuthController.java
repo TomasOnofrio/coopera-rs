@@ -1,15 +1,13 @@
 package com.coopera_rs.web.controllers;
 
+import com.coopera_rs.application.service.EmailService;
+import com.coopera_rs.web.dto.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.coopera_rs.application.service.AuthService;
 import com.coopera_rs.core.User;
 import com.coopera_rs.infrastructure.repository.mapper.UserMapper;
-import com.coopera_rs.web.dto.LoginRequestDTO;
-import com.coopera_rs.web.dto.LoginResponseDTO;
-import com.coopera_rs.web.dto.RegisterUserDTO;
-import com.coopera_rs.web.dto.UserResponseDTO;
 
 import jakarta.validation.Valid;
 
@@ -26,11 +24,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AuthController {
     
     private final AuthService authService;
+    private final EmailService emailService;
 
 
-
-    public AuthController( AuthService authService) {
+    public AuthController(AuthService authService, EmailService emailService) {
         this.authService = authService;
+        this.emailService = emailService;
     }
 
     @PostMapping("/register")
@@ -61,5 +60,22 @@ public class AuthController {
             .toList();
 
         return ResponseEntity.ok(responseDTOs);
-    }   
+    }
+
+    @PostMapping("/linkPasswordChange")
+    public ResponseEntity<String> emailTrocaSenha(@RequestBody EmailDTO emailDTO) {
+        String email = emailDTO.getEmail();
+        String url = emailDTO.getUrl();
+        System.out.println("-----------------");
+        System.out.println(url);
+        Optional<User> userOptional = authService.findUserByEmail(email);
+        boolean userEmpty = userOptional.isEmpty();
+        if(!userEmpty) {
+            User user = userOptional.get();
+            if(emailService.sendPasswordLink(user,url)){
+                return ResponseEntity.ok("Email enviado com sucesso!");
+            }
+        }
+        return ResponseEntity.badRequest().body("Erro ao enviar email!");
+    }
 }
