@@ -1,88 +1,60 @@
 package com.coopera_rs.infrastructure.repository.entity;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
+import com.coopera_rs.core.enums.Role;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.UuidGenerator;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name= "client")
 public class UserEntity {
     @Id
-    @GeneratedValue
-    @UuidGenerator
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(unique = true, nullable = false, name = "username")
-    private String username;
-
-    @Column
-    private String password;
-
-    @Column(unique = true, nullable = false, name = "email")
+    @NotBlank
+    @Email
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @Column
-    private boolean emailVerified;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
+    @Column(nullable = false)
+    private String name;
 
-    public UserEntity() {
-    }
+    @Column(nullable = false)
+    @NotBlank
+    private String phone;
 
-    public UserEntity(UUID id,String username, String password, String email,  boolean emailVerified) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.emailVerified = emailVerified;
-    }
+    @Column(nullable = false)
+    private boolean isVerified;
 
+    @Column(nullable = false)
+    private String salt;
 
-    public UUID getId() {
-        return this.id;
-    }
+    @Column(nullable = false)
+    private String password;
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
+    @UpdateTimestamp
+    @Column(nullable = false)
+    private LocalDateTime lastUpdated;
 
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isEmailVerified() {
-        return this.emailVerified;
-    }
-
-    public boolean getEmailVerified() {
-        return this.emailVerified;
-    }
-
-    public void setEmailVerified(boolean emailVerified) {
-        this.emailVerified = emailVerified;
-    }
+    @Column(nullable = false)
+    private boolean isActive;
 
 }

@@ -1,9 +1,11 @@
 package com.coopera_rs.core.validation;
 
+import com.coopera_rs.core.validation.PasswordValidator;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 public class PasswordValidatorImpl implements ConstraintValidator<PasswordValidator, String> {
+
     @Override
     public boolean isValid(String password, ConstraintValidatorContext context) {
         if (password == null || password.length() < 6) {

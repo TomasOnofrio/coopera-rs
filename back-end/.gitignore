@@ -31,7 +31,7 @@
 # *.ipr
 
 # IntelliJ
-#out/
+out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -121,11 +121,3 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 *.lnk
-
-# Arquivos compilados Java
-*.class
-
-# Pastas de build comuns (Java/Maven/Gradle)
-target/
-out/
-bin/
