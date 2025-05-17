@@ -12,7 +12,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name= "store_photo")
+@Table(
+    name= "store_photo",
+    uniqueConstraints = @UniqueConstraint(columnNames = {"id_store", "position"})
+)
 public class StorePhotoEntity {
 
     @Id
