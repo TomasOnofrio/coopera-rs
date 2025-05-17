@@ -4,12 +4,15 @@ public class StorePhoto {
     private long idStorePhoto;
     private String photoUrl;
     private long idStore;
+    private Integer position;
 
 
-    public StorePhoto(long idStorePhoto, String photoUrl, long idStore) {
+    public StorePhoto(long idStorePhoto, String photoUrl, long idStore, Integer position) {
         this.idStorePhoto = idStorePhoto;
         this.photoUrl = photoUrl;
         this.idStore = idStore;
+        this.position = position;
+
     }
 
     public StorePhoto(){
@@ -40,5 +43,12 @@ public class StorePhoto {
         this.idStore = idStore;
     }
 
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
+    }
     
 }

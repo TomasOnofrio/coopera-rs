@@ -27,4 +27,7 @@ public class StorePhotoEntity {
     @ManyToOne
     @JoinColumn(name = "id_store", nullable = false)
     private StoreEntity store;
+
+    @Column
+    private Integer position;
 }
